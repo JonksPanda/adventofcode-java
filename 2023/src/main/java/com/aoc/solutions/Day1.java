@@ -1,6 +1,5 @@
 package com.aoc.solutions;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,19 +38,32 @@ public class Day1 extends Solution {
                 "nine");
 
         for (String row : this.input.getRowsList()) {
-            // Loops through string letter by letter and checks for match
-            String[] subStrings = row.split("");
-            String iteratedString = "";
-            System.out.println(row);
-            for (String character : subStrings) {
+            if (!(row.matches("^[0-9].*") && row.matches(".*[0-9]$")) && row.length() >= 3) {
+                System.out.println(row);
+                row = row.replaceAll("oneight", "oneeight");
+                row = row.replaceAll("fiveight", "fiveeight");
+                row = row.replaceAll("eightwo", "eighttwo");
+                row = row.replaceAll("nineight", "nineeight");
+                row = row.replaceAll("sevenine", "sevennine");
+                row = row.replaceAll("threeight", "threeeight");
+                row = row.replaceAll("eighthree", "eightthree");
+                row = row.replaceAll("twone", "twoone");
 
+                for (String numb : spelledNumbs) {
+                    do {
+                        row = row.replaceFirst(numb, Integer.toString(spelledNumbs.indexOf(numb) + 1));
+                        System.out.println(row);
+                    } while (row.contains(numb));
+                }
             }
-            System.out.println(row);
 
             // remove letters from String
             row = row.replaceAll("[^0-9]", "");
+            System.out.println(row);
             String first = row.substring(0, 1);
             String last = row.substring(row.length() - 1);
+            System.out.println(first);
+            System.out.println(last);
             int number = Integer.parseInt(first + last);
             sum += number;
         }
